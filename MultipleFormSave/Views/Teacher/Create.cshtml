@@ -1,0 +1,98 @@
+﻿@model MultipleFormSave.Models.Teacher
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+@*@Html.BeginForm(“detail”,”EmployeeController”, FormMethod.Post)*@
+@using (Html.BeginForm("Save", "Form", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Teacher</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <input id="form_id" name="form_id" type="hidden" value="2" />
+        <input id="table_name" name="table_name" type="hidden" value="Teacher" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.TeacherName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TeacherName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TeacherName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TeacherEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TeacherEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TeacherEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TeacherAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TeacherAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TeacherAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover" style="padding:0px">
+
+            <tr class="bg-primary">
+                <th>Name</th>
+                <th>Age</th>
+                <th>Designation</th>
+            </tr>
+
+            @for (int i = 0; i < 3; i++)
+            {
+               
+
+                <tr>
+                    <td><input name="name[@i]" type="text" class="form-control" style="padding:0px"/></td>
+                    <td><input name="age[@i]" type="text" class="form-control" style="padding:0px"/></td>
+                    <td><input name="Designation[@i]" type="text" class="form-control" style="padding:0px" /></td>
+                </tr>
+               
+                <tr>
+                    <td colspan="100">
+                        <table class="table table-bordered">
+                            <tr class="bg-success">
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Designation</th>
+                            </tr>
+                            @for (int j = 0; j < 3; j++)
+                            {
+                                        
+                                <tr>
+                                    <td><input name="name[@i][@j]" type="text" class="form-control" style="padding:0px" /></td>
+                                    <td><input name="age[@i][@j]" type="text" class="form-control" style="padding:0px" /></td>
+                                    <td><input name="Designation[@i][@j]" type="text" class="form-control" style="padding:0px" /></td>
+                                </tr>
+                                        
+                            }
+                        </table>
+                    </td>
+                </tr>
+
+            }
+        </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

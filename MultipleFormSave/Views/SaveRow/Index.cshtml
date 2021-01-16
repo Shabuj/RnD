@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="text-align:center">নম্বর</th>
+            <th style="text-align:center">আর্মস/সার্ভিস</th>
+            <th style="text-align:center">পদবী</th>
+            <th style="text-align:center">নাম</th>
+            <th style="text-align:center">শিক্ষার্থীর সাথে সম্পর্ক</th>
+            <th style="text-align:center">ইউনিট/কর্মস্থল</th>
+            <th style="text-align:center">কর্মরত/অবঃ</th>
+            <th style="text-align:center">মন্তব্য</th>
+            <th style="text-align:center">যোগ/বিয়োগ</th>
+        </tr>
+    </thead>
+
+    <tbody class="relativesv-fields">
+        <tr class="relativesv">
+            <td>
+                <input id="personal_no_0" type="text" class="form-control" name="rel_personal_no[]" value="">
+
+                <input type="hidden" name="rel_occupations[]">
+                <input type="hidden" name="rel_contact_no[]">
+                <input type="hidden" name="rel_address[]">
+            </td>
+            <td>
+                <input id="mf_id_0" type="text" class="form-control" name="rel_mf_ids[]" value="">
+
+
+            </td>
+            <td>
+                <input id="rank_id_0" type="text" class="form-control" name="rel_rank_ids[]" value="">
+
+
+            </td>
+            <td>
+                <input id="name_0" type="text" class="form-control" name="rel_names[]" value="">
+
+
+            </td>
+            <td>
+                <input id="relation_0" type="text" class="form-control" name="relations[]" value="">
+
+            </td>
+            <td>
+                <input id="unit_0" type="text" class="form-control" name="rel_units[]" value="">
+
+
+            </td>
+            <td>
+                <select id="in_working_0" type="text" class="form-control" name="in_working[]">
+                    <option value="1">হ্যাঁ</option>
+                    <option value="0">না</option>
+                </select>
+
+            </td>
+            <td>
+                <input id="remarks_0" type="text" class="form-control" name="rel_remarks[]" value="">
+
+                <input type="hidden" name="type[]" value="1">
+            </td>
+            <td>
+                <a class="btn btn-outline-primary btn-add-relativesv" href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+
+    $(document).on('click', '.btn-add-relativesv', function (e) {
+        e.preventDefault();
+        var preschoolFields = $('.relativesv-fields'),
+            currentEntry = $(this).parents('.relativesv:first'),
+            newEntry = $(currentEntry.clone()).appendTo(preschoolFields);
+
+        newEntry.find('input').val('');
+        preschoolFields.find('.relativesv:not(:last) .btn-add-relativesv')
+            .removeClass('btn-add-relativesv').addClass('btn-remove-relativesv')
+            // .removeClass('btn-success').addClass('btn-danger')
+            .html('<i class="fa fa-minus"></i>');
+    }).on('click', '.btn-remove-relativesv', function (e) {
+        $(this).parents('.relativesv:first').remove();
+
+        e.preventDefault();
+        return false;
+    });
+</script>
