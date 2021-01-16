@@ -1,0 +1,310 @@
+﻿@model IEnumerable<SelectCellValueSearch.Models.EmpViewModel>
+@{
+    ViewBag.Title = "TableCellSearch";
+}
+
+<h2>TableCellSearch</h2>
+<div>
+    Search: <input type="text" id="myInput" placeholder="Search any cell" class="form-control form-group-sm" />
+</div>
+
+<table class="table" id="myTable1">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Emp Age</th>
+            <th>Department Name</th>
+            <th>Department Code</th>
+            @*<th>Options</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.empId</td>
+                <td> @item.empName</td>
+                <td> @item.age</td>
+                <td> @item.depName</td>
+                <td> @item.depCode</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<table class="table" id="myTable2">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Emp Age</th>
+            <th>Department Name</th>
+            <th>Department Code</th>
+           
+            @*<th>Options</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.empId</td>
+                <td> @item.empName</td>
+                <td> @item.age</td>
+                <td> @item.depName</td>
+                <td> @item.depCode</td>
+               
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@*<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>*@
+
+<script>
+
+    $(document).ready(function () {
+
+       // var table = new array();
+
+        for (var j = 1; j <= 2; j++) {
+
+            var TableId = '#myTable' + j.toString();
+
+            
+
+            $(TableId + ' thead tr').clone(true).appendTo(TableId + ' thead');
+            $(TableId + ' thead tr:eq(1) th').each(function (i) {
+                var title = $(this).text();
+
+                //console.log(title);
+
+
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+                $('input', this).on('keyup change', function () {
+                    if (table.column(i).search() !== this.value) {
+
+                        table
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+        }
+       
+
+           
+            
+            
+
+        $('#myTable1 td').dblclick(function (e) {
+            var col = $(this).parent().children().index($(this));
+            //alert("column: "+col);
+            var row = $(this).parent().parent().children().index($(this).parent());
+            //alert("row: " + row);
+            var clickedCell = $(e.target).closest("td");
+            var searchValue = clickedCell.text();
+            // alert(searchValue);
+            $('#myTable1 thead tr:eq(1) th').eq(col).find('input').eq(0).val(clickedCell.text())
+
+            //alert(table.column(col).count());
+
+
+            if (table.column(col).search() !== searchValue) {
+                table
+                    .column(col)
+                    .search(searchValue)
+                    .draw();
+            }
+
+            //alert(table.rows(1).value);
+        });
+
+        var table = $('#myTable1').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+        
+       
+
+        $('#myTable2 td').dblclick(function (e) {
+            var col2 = $(this).parent().children().index($(this));
+            //alert("column: "+col);
+            var row = $(this).parent().parent().children().index($(this).parent());
+            //alert("row: " + row);
+            var clickedCell1 = $(e.target).closest("td");
+            var searchValue1 = clickedCell1.text();
+            // alert(searchValue);
+            $('#myTable2  thead tr:eq(1) th').eq(col2).find('input').eq(0).val(searchValue1)
+
+            //alert(table.column(col).count());
+
+
+            if (table2.column(col2).search() !== searchValue1) {
+                table2
+                    .column(col2)
+                    .search(searchValue1)
+                    .draw();
+            }
+
+
+            //alert(table.rows(1).value);
+        });
+
+        var table2 = $('#myTable2').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+
+
+
+    });
+
+</script>
+
+
+@*<script>
+    $(document).ready(function () {
+
+        $('#myTable thead tr').clone(true).appendTo('#myTable thead');
+
+        $('td').dblclick(function (e) {
+            var col = $(this).parent().children().index($(this));
+            //alert("column: "+col);
+            var row = $(this).parent().parent().children().index($(this).parent());
+            //alert("row: " + row);
+            var clickedCell = $(e.target).closest("td");
+            var searchValue = clickedCell.text();
+            alert(searchValue);
+            //$('#myTable thead tr:eq(1) th').eq(col).find('input').eq(0).val(clickedCell.text())
+
+            //alert(table.column(col).count());
+
+
+            if (table.column(col).search() !== searchValue) {
+                table
+                    .column(col)
+                    .search(searchValue)
+                    .draw();
+            }
+            
+            //alert(table.rows(1).value);
+        });
+
+        var table = $('#myTable').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+
+        //$('#myTable thead tr').clone(true).appendTo('#myTable thead');
+        //$('#myTable thead tr:eq(1) th').each(function (i) {
+        //    var title = $(this).text();
+
+        //    console.log(title);
+
+            
+
+        //    $('input', this).on('keyup change', function () {
+        //        if (table.column(i).search() !== this.value) {
+        //            table
+        //                .column(i)
+        //                .search(this.value)
+        //                .draw();
+        //        }
+        //    });
+        //});
+
+        
+    });
+</script>*@
+
+
+
+
+
+
+
+
+
+
+        <!--//$("input", this).change( function () {
+            //    var value = $(this).val().toLowerCase();
+
+            //    alert(value);
+            //    $("#myTable tbody tr").filter(function () {
+            //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            //    });
+            //});
+
+
+
+            //$('input', this).on('change', function () {
+
+            //    alert("fill")
+            //    if (table.col.search() !== this.value) {
+            //        alert("search")
+            //        table
+            //            .col
+            //            .search(this.value)
+            //            .draw();
+            //    }
+            //})
+
+
+
+
+            //$('#myTable thead tr').clone(true).appendTo('#myTable thead');
+            //$('#myTable thead tr:eq(1) th').each(function (i) {
+            //    var title = $(this).text();
+
+            //    console.log(title);
+
+            //    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+
+
+            //    if (table.column(i).search() !== this.value) {
+            //        table
+            //            .column(i)
+            //            .search(this.value)
+            //            .draw();
+            //    }
+
+
+            //});
+            //alert('Row: ' + row + ', Column: ' + col);
+
+
+
+
+
+
+
+
+        //// Searching One cell and selected one cell get value and search.
+        //$("#myInput").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+
+        //    $("#myTable tbody tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});-->
+
+
+
+       @* $("#myTable tbody:has(td)").click(function (e) {
+            var col = $(this).parent().children().index($(this));
+            var row = $(this).parent().parent().children().index($(this).parent());
+            $('#myTable thead tr:eq(1) th').eq(col).find('input').eq(0).val()
+
+            //alert($('td', this).index(e.target)) //Cell index
+            var clickedCell = $(e.target).closest("td");
+
+            $("#myInput").val(clickedCell.text());
+        });*@
