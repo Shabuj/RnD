@@ -1,0 +1,429 @@
+﻿
+@{
+    ViewBag.Title = "SaveTableRow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SaveTableRow</h2>
+
+
+
+@using (Html.BeginForm("SaveOrder", "SaveRow", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Customer</h4>
+
+
+        <hr />
+
+        @*<div class="form-group">
+                @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" id="name" name="name" placeholder="Enter Customer Name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Customer Address", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" id="address" name="address" placeholder="Enter Customer Address" class="form-control" />
+                </div>
+            </div>*@
+
+        <div class="body-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-10">
+
+                        @for (int t = 0; t < 2; t++)
+                        {
+                            if (t == 0)
+                            {
+                                <div class="panel panel-danger">
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-hover small-text " id="tb">
+                                            <thead>
+                                                <tr class="tr-header bg-primary">
+
+                                                    <th>Product Name</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Amount</th>
+                                                    <th>
+                                                        <a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Order">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+
+                                                @for (int j = 0; j < 3; j++)
+                                                {
+
+                                                    if (j == 0)
+                                                    {
+                                                        <tr>
+
+                                                            <td> <input type="text" id="productName" name="productName[@t][@j][0]" placeholder="Product Name" class="form-control" /> </td>
+                                                            <td> <input type="number" id="price" name="price[@t][@j][0]" placeholder="Product Price" class="form-control" /> </td>
+                                                            <td><input type="number" id="quantity" name="quantity[@t][@j][0]" placeholder="Quantity" class="form-control" /></td>
+                                                            <td><input type="text" id="amount" name="amount[@t][@j][0]" placeholder="Amount" class="form-control" /></td>
+                                                            <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+
+                                                        </tr>
+                                                    }
+
+                                                    else if (j == 1)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="100">
+
+
+                                                                <table class="table table-bordered table-hover small-text " id="tb">
+                                                                    <thead>
+                                                                        <tr class="tr-header bg-danger">
+
+                                                                            <th>Product Name</th>
+                                                                            <th>Price</th>
+                                                                            <th>Quantity</th>
+
+                                                                            <th>
+                                                                                <a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Order">
+                                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                                </a>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+                                                                        @for (int m = 0; m < 1; m++)
+                                                                        {
+                                                                            <tr>
+
+
+                                                                                <td> <input type="text" id="productName" name="productName[@t][@j][@m]" placeholder="Product Name" class="form-control" /> </td>
+                                                                                <td> <input type="number" id="price" name="price[@t][@j][@m]" placeholder="Product Price" class="form-control" /> </td>
+                                                                                <td><input type="number" id="quantity" name="quantity[@t][@j][@m]" placeholder="Quantity" class="form-control" /></td>
+
+                                                                                <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+
+
+
+                                                                            </tr>
+                                                                        }
+
+
+                                                                    </tbody>
+
+                                                                </table>
+
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else if (j == 2)
+                                                    {
+                                                        <tr>
+
+                                                            <td> <input type="text" id="productName" name="productName[@t][@j][2]" placeholder="Product Name" class="form-control" /> </td>
+                                                            <td> <input type="number" id="price" name="price[@t][@j][2]" placeholder="Product Price" class="form-control" /> </td>
+                                                            <td><input type="number" id="quantity" name="quantity[@t][@j][2]" placeholder="Quantity" class="form-control" /></td>
+                                                            <td><input type="text" id="amount" name="amount[@t][@j][2]" placeholder="Amount" class="form-control" /></td>
+                                                            <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+
+                                                        </tr>
+                                                    }
+
+                                                }
+
+
+
+
+
+
+
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="panel panel-danger">
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-hover small-text" id="tb">
+                                            <thead>
+                                                <tr class="tr-header bg-primary">
+
+                                                    <th>Product Name</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Amount</th>
+                                                    <th>Status</th>
+                                                    <th>
+                                                        <a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Order">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+
+                                                @for (int j = 0; j < 3; j++)
+                                                {
+
+                                                    if (j == 0)
+                                                    {
+                                                        <tr>
+
+
+                                                            <td> <input type="text" id="productName" name="productName[@t][@j][0]" placeholder="Product Name" class="form-control" /> </td>
+                                                            <td> <input type="number" id="price" name="price[@t][@j][0]" placeholder="Product Price" class="form-control" /> </td>
+                                                            <td><input type="number" id="quantity" name="quantity[@t][@j][0]" placeholder="Quantity" class="form-control" /></td>
+                                                            <td><input type="text" id="amount" name="amount[@t][@j][0]" placeholder="Amount" class="form-control" /></td>
+                                                            <td><input type="text" id="status" name="status[@t][@j][0]" placeholder="Amount" class="form-control" /></td>
+                                                            <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+
+
+
+
+
+                                                        </tr>
+                                                    }
+
+                                                    else if (j == 1)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="100">
+
+
+                                                                <table class="table table-bordered table-hover small-text " id="tb">
+                                                                    <thead>
+                                                                        <tr class="tr-header bg-danger">
+
+                                                                            <th>Product Name</th>
+                                                                            <th>Price</th>
+                                                                            <th>Quantity</th>
+
+                                                                            <th>
+                                                                                <a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Order">
+                                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                                </a>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+                                                                        @for (int m = 0; m < 2; m++)
+                                                                        {
+                                                                        <tr>
+
+                                                                            @*@for (int r = 0; r < 3; r++)
+                                                                            {*@
+                                                                                <td> <input type="text" id="productName" name="productName[@t][@j][@m]" placeholder="Product Name" class="form-control" /> </td>
+                                                                                <td> <input type="number" id="price" name="price[@t][@j][@m]" placeholder="Product Price" class="form-control" /> </td>
+                                                                                <td><input type="number" id="quantity" name="quantity[@t][@j][@m]" placeholder="Quantity" class="form-control" /></td>
+
+                                                                                <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+                                                                            @*}*@
+
+
+
+
+                                                                        </tr>
+                                                                        }
+
+                                                                    <tr>
+
+                                                                        <td colspan="100">
+
+
+                                                                            <table class="table table-bordered table-hover small-text " id="tb">
+                                                                                <thead>
+                                                                                    <tr class="tr-header bg-primary">
+
+                                                                                        <th>Product Name</th>
+                                                                                        <th>Price</th>
+                                                                                        <th>Quantity</th>
+
+                                                                                        <th>
+                                                                                            <a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Order">
+                                                                                                <span class="glyphicon glyphicon-plus"></span>
+                                                                                            </a>
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                                <tbody>
+                                                                                    @for (int m = 0; m < 2; m++)
+                                                                                    {
+                                                                                        if (m == 0)
+                                                                                        {
+                                                                                            <tr>
+
+
+                                                                                                <td> <input type="text" id="productName" name="productName[@t][@j][@m][0]" placeholder="Product Name" class="form-control" /> </td>
+                                                                                                <td> <input type="number" id="price" name="price[@t][@j][@m][0]" placeholder="Product Price" class="form-control" /> </td>
+                                                                                                <td><input type="number" id="quantity" name="quantity[@t][@j][@m][0]" placeholder="Quantity" class="form-control" /></td>
+
+                                                                                                <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+
+
+
+                                                                                            </tr>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <tr>
+
+
+                                                                                                <td> <input type="text" id="productName" name="productName[@t][@j][@m][1]" placeholder="Product Name" class="form-control" /> </td>
+                                                                                                <td> <input type="number" id="price" name="price[@t][@j][@m][1]" placeholder="Product Price" class="form-control" /> </td>
+                                                                                                <td><input type="number" id="quantity" name="quantity[@t][@j][@m][1]" placeholder="Quantity" class="form-control" /></td>
+
+                                                                                                <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+
+
+
+                                                                                            </tr>
+                                                                                        }
+
+                                                                                    }
+
+
+                                                                                </tbody>
+
+                                                                            </table>
+
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    </tbody>
+
+                                                                </table>
+
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else if (j == 2)
+                                                    {
+                                                        <tr>
+
+                                                            <td> <input type="text" id="productName" name="productName[@j][0]" placeholder="Product Name" class="form-control" /> </td>
+                                                            <td> <input type="number" id="price" name="price[@j][0]" placeholder="Product Price" class="form-control" /> </td>
+                                                            <td><input type="number" id="quantity" name="quantity[@j][0]" placeholder="Quantity" class="form-control" /></td>
+                                                            <td><input type="text" id="amount" name="amount[@j][0]" placeholder="Amount" class="form-control" /></td>
+                                                            <td><input type="text" id="status" name="status[@j][0]" placeholder="Amount" class="form-control" /></td>
+                                                            <td><a href='javascript:void(0);' class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
+
+                                                        </tr>
+                                                    }
+
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="">
+                <button id="saveOrder" type="submit" class="btn btn-danger" style="float:left; margin:0px 60px;">Save Order</button>
+                @*<input type="submit" value="Save Order" class="btn btn-success btn-block" style="float:left; margin:0px 60px;" />*@
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $(function () {
+        $('#addMore').on('click', function () {
+            var data = $("#tb tr:eq(1)").clone(true).appendTo("#tb");
+            data.find("input").val('');
+        });
+        $(document).on('click', '.remove', function () {
+            var trIndex = $(this).closest("tr").index();
+            if (trIndex > 1) {
+                $(this).closest("tr").remove();
+            } else {
+                alert("Sorry!! Can't remove first row!");
+            }
+        });
+    });
+
+    //After Click Save Button Pass All Data View To Controller For Save Database
+    //function saveOrder(data) {
+    //    return $.ajax({
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        type: 'POST',
+    //        url: "/SaveRow/SaveOrder",
+    //        data: data,
+    //        success: function (result) {
+    //            alert(result);
+    //            location.reload();
+    //        },
+    //        error: function () {
+    //            alert("Error!")
+    //        }
+    //    });
+    //}
+    ////Collect Multiple Order List For Pass To Controller
+    //$("#saveOrder").click(function (e) {
+    //    e.preventDefault();
+
+    //    var orderArr = [];
+    //    orderArr.length = 0;
+
+    //    $.each($("#tb tbody tr"), function () {
+    //        orderArr.push({
+    //            productName: $(this).find('td:eq(0) input').val(),
+    //            price: parseFloat($(this).find('td:eq(1) input').val()),
+    //            quantity: parseInt($(this).find('td:eq(2) input').val()),
+    //            amount: parseFloat($(this).find('td:eq(3) input').val())
+    //        });
+    //    });
+
+
+
+    //    var data = JSON.stringify({
+    //        name: $("#name").val(),
+    //        address: $("#address").val(),
+    //        order: orderArr
+    //    });
+
+    //    $.when(saveOrder(data)).then(function (response) {
+    //        console.log(response);
+    //    }).fail(function (err) {
+    //        console.log(err);
+    //    });
+    //});
+</script>
