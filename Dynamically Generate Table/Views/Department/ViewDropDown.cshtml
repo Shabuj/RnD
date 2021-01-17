@@ -1,0 +1,75 @@
+﻿@model IEnumerable<RND.Models.Department>
+
+
+@{
+    ViewBag.Title = "ViewDropDown";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewDropDown</h2>
+
+<div class="form-group">
+    <label class="ontrol-label col-md-2 "> Department </label>
+    <div class="col-md-10">
+        <select id="DepartmentId" class="form-control">
+            <option value="0" selected>--Select Department--</option>
+
+            @foreach (var dept in Model)
+            {
+                <option value="@dept.DepartmentId">@dept.DepartmentName</option>
+            }
+
+        </select>
+
+    </div>
+</div>
+<br/>
+
+<div class="form-group">
+    <label class="ontrol-label col-md-2 "> Student Reg No </label>
+    <div class="col-md-10">
+        <select id="StudentId" class="form-control">
+            <option value="0" selected>--Select Student--</option>
+
+           
+        </select>
+
+    </div>
+</div>
+
+<br/>
+<br/>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#DepartmentId").change(function () {
+
+                var deptId = $("#DepartmentId").val();
+                var parameter = { departmentId: deptId }
+                $("#StudentId").empty();
+                $("#StudentId").append('<option value=""> --Select Student --</option>');
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetStudentByDeptId","Department")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (studentList) {
+                        $.each(studentList,
+                            function (key, value) {
+                                $("#StudentId").append('<option value='+key.StudentId +'>' + value.StudentRegNo +'</option>');
+                            });
+                    }
+
+                });
+
+
+            });
+
+        });
+    </script>
+
+
+}

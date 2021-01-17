@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Validation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Validation</h2>
+
+
+
+
+<form id="login-form">
+
+    <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Enter your Full name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="password" id="password" name="password" placeholder="Enter  password" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password.." class="form-control" />
+    </div>
+    <div class="form-group">
+        @Cont.inputel()
+    </div>
+    <input type="submit" class="btn btn-success btn-block" />
+
+ 
+
+</form>
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#login-form').validate({
+                rules: {
+                    name: "required",
+                    email: {
+                        required: true,
+                        email: true
+
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    confirmpassword:
+                    {
+                        required: true,
+                        equalTo: "#password"
+                    }
+                },
+                messages: {
+                    name: "Please enter your name",
+                    email: {
+
+                        required: "Email is mandatory ..",
+                        email: "Email is not valid..Please enter a valid email "
+                    },
+                    password: {
+                        required: "Password is Mandatory here.",
+                        minlength: "Password musst be min 6 character long .."
+
+                    },
+                    confirmpassword: {
+                        required: "Password is Mandatory here.",
+                        equalTo: "Please enter same password as above"
+                    }
+
+
+                }
+            });
+            $('#dateOfbirth').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                showAnim: "slideDown",
+                dateFormat: "d M, y"
+            });
+        });
+
+
+    </script>
+}
+
+
+

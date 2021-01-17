@@ -1,0 +1,43 @@
+﻿
+
+@helper InputElement(string type, List<string> list1)
+{
+    if (type == "text")
+    {
+        <input type="text" name="" class="form-control">
+    }
+    else if (type == "select")
+    {
+
+        <select class="form-control">
+            @foreach (var item in list1)
+            {
+                <option value="1">@item</option>
+            }
+
+        </select>
+
+    }
+    else if (type == "radio")
+    {
+        <input type="radio" name="gender" Value="Male" class="">
+        @:Male
+        <input type="radio" name="gender" Value="Female" class="">
+        @:Female
+    }
+    else if (type == "checkbox")
+    {
+        <input type="checkbox" name="" class="">
+    }
+    else if (type == "email")
+    {
+        <input type="email" name="" class="form-control">
+    }
+    else if (type == "number")
+    {
+        <input type="number" name="" class="form-control">
+    }
+
+
+
+}

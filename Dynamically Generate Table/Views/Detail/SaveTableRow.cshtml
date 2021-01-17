@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "SaveTableRow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SaveTableRow</h2>
+
+@using (Html.BeginForm("SaveOrder", "Detail", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Customer</h4>
+        <hr />
+
+        <div class="form-group">
+            @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="name" name="name" placeholder="Enter Customer Name" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Customer Address", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="address" name="address" placeholder="Enter Customer Address" class="form-control" />
+            </div>
+        </div>
+
+        <div class="body-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-10">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <table class="table table-bordered table-hover small-text" id="tb" style="margin:0px; padding:0px;">
+                                    <thead>
+                                        <tr class="tr-header">
+                                            <th>Product Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Amount</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="relativesv-fields">
+                                        <tr class="relativesv">
+
+                                            <td> <input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" /> </td>
+                                            <td> <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" /> </td>
+                                            <td><input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" /></td>
+                                            <td><input type="text" id="amount" name="amount" placeholder="Amount" class="form-control" /></td>
+                                            <td>
+                                                @*<a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Order">
+                            <span class="glyphicon glyphicon-plus "> </span>
+                        </a>*@
+                                                <a class="btn btn-outline-primary btn-add-relativesv" href="javascript:void(0)">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                                @*<a href='javascript:void(0);' class='remove'>
+                            <span class='glyphicon glyphicon-remove'></span>
+                        </a>*@
+                                            </td>
+
+
+
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                                <input type="text" id="totalAmount" name="productName" placeholder="" class="" style="margin:0px; padding:0px; float:right; margin-left:50px;" />
+
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="">
+                <button id="saveOrder" type="submit" class="btn btn-danger" style="float:left; margin:0px 60px;">Save Order</button>
+                @*<input type="submit" value="Save Order" class="btn btn-success btn-block" style="float:left; margin:0px 60px;" />*@
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    //$(function () {
+    //    $('#addMore').on('click', function () {
+    //        var data = $("#tb tr:last").clone(true).appendTo("#tb");
+    //        data.find("input").val();
+    //    });
+    //    $(document).on('click', '.remove', function () {
+    //        var trIndex = $(this).closest("tr").index();
+    //        if (trIndex > 0) {
+    //            $(this).closest("tr").remove();
+    //        } else {
+    //            alert("Sorry!! Can't remove first row!");
+    //        }
+    //    });
+
+    //    $("#addCF").click(function () {
+    //        var closest_tr = $(this).closest('tr').clone(true);
+    //        closest_tr = $(closest_tr).find("td:first").html("").parent();
+    //        var clone = closest_tr.insertAfter($(this).closest('tr'));
+    //    });
+    //    $("#customFields").on('click', '.remCF', function () {
+    //        $(this).parent().parent().remove();
+    //    });
+    //});
+
+    $(document).on('click', '.btn-add-relativesv', function (e) {
+        e.preventDefault();
+        var preschoolFields = $('.relativesv-fields'),
+            currentEntry = $(this).parents('.relativesv:first'),
+            newEntry = $(currentEntry.clone()).appendTo(preschoolFields);
+
+        newEntry.find('input').val();
+        preschoolFields.find('.relativesv:not(:last) .btn-add-relativesv')
+            .removeClass('btn-add-relativesv').addClass('btn-remove-relativesv')
+            //                        .removeClass('btn-success').addClass('btn-danger')
+            .html('<i class="fa fa-minus"></i>');
+        var totalAmount = 0;
+        $.each($("#tb tbody tr"), function () {
+           
+                
+                 
+            totalAmount+=parseFloat($(this).find('td:eq(3) input').val());
+        });
+
+        $("#totalAmount").val(totalAmount);
+
+      
+    }).on('click', '.btn-remove-relativesv', function (e) {
+        $(this).parents('.relativesv:first').remove();
+
+        e.preventDefault();
+        return false;
+    });
+
+    //After Click Save Button Pass All Data View To Controller For Save Database
+    function saveOrder(data) {
+        return $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: "/Detail/SaveOrder",
+            data: data,
+            success: function (result) {
+                alert(result);
+                location.reload();
+            },
+            error: function () {
+                alert("Error!")
+            }
+        });
+    }
+    //Collect Multiple Order List For Pass To Controller
+    $("#saveOrder").click(function (e) {
+        e.preventDefault();
+
+        var orderArr = [];
+        orderArr.length = 0;
+
+        $.each($("#tb tbody tr"), function () {
+            orderArr.push({
+                productName: $(this).find('td:eq(0) input').val(),
+                price: parseFloat($(this).find('td:eq(1) input').val()),
+                quantity: parseInt($(this).find('td:eq(2) input').val()),
+                amount: parseFloat($(this).find('td:eq(3) input').val())
+            });
+        });
+
+
+
+        var data = JSON.stringify({
+            name: $("#name").val(),
+            address: $("#address").val(),
+            order: orderArr
+        });
+
+        $.when(saveOrder(data)).then(function (response) {
+            console.log(response);
+        }).fail(function (err) {
+            console.log(err);
+        });
+    });
+</script>
+

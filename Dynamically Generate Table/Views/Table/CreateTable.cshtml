@@ -1,0 +1,79 @@
+﻿@model IEnumerable<RND.Models.TableViewModel>
+@{
+    ViewBag.Title = "CreateTable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreateTable</h2>
+
+
+
+
+
+<div class="body-content">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            @{
+                int MaxTable = Model.Max(m => m.TableId);
+
+            }
+            <div class="col-md-12">
+
+                @for (int T = 1; T <= MaxTable; T++)
+                {
+                    //int MinFID = Model.Where(m => m.TableId == T).Min(m => m.FieldId);
+                    //int MaxFID = Model.Where(m => m.TableId == T).Max(m => m.FieldId);
+
+                    int MaxTableFID = Model.Where(m => m.TableId == T).Max(m => m.TableFieldId);
+
+                    string tName = Model.Where(m => m.TableId == T).Select(m => m.TableName).FirstOrDefault();
+
+                    <div class="panel panel-danger ">
+                        <div class="panel-body">
+                            <h4 class="bg-primary" style="padding:4px; text-align:center">@tName</h4>
+
+                            <table class="table table-bordered table-hover small-text" id="tb">
+                                <tr class="tr-header">
+
+                                    @for (int j = 1; j <= MaxTableFID; j++)
+                                    {
+                                        var fieldName = Model.Where(m => m.TableId == T && m.TableFieldId == j).Select(m => m.FieldName).FirstOrDefault();
+                                        <th> @fieldName</th>
+                                    }
+
+                                </tr>
+                                <tr>
+                                    @for (int k = 1; k <= MaxTableFID; k++)
+                                    {
+                                        var fieldType = Model.Where(m => m.TableId == T && m.TableFieldId == k).Select(m => m.FieldType).FirstOrDefault();
+                                        List<string> l = new List<string>();
+                                        l = ViewBag.list;
+                                        <td>@ControlHelper.InputElement(fieldType,l)</td>
+                                    }
+
+                                </tr>
+
+                            </table>
+
+                        </div>
+                    </div>
+                }
+                <input type="button" name="name" value="Save" style="float:right;" class="btn btn-success  btn-block" />
+            </div>
+            
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
