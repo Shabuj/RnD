@@ -1,0 +1,7 @@
+select  c.name 
+ from sys.columns c inner join sys.all_objects t on t.object_id=c.object_id where t.name='Utl_Dynamic_Table_Column_S' and t.type='u'  and 
+ 
+ c.name not in 
+
+ (select  c.name 
+ from sys.columns c inner join sys.all_objects t on t.object_id=c.object_id where  t.name='Utl_Dynamic_Table' and t.type='u' )
